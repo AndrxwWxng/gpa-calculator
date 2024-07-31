@@ -82,9 +82,9 @@ const GPAcalculator = () => {
       <CardHeader>
         <CardTitle>GPA Calculator</CardTitle>
         <CardDescription>
-          This program calculates GPA on the Allen ISD scale. Input the number of classes, their name, level, and grade.
+          This program calculates GPA on the Allen ISD scale. Input the number of classes, their name, level, and course grade.
           Allen ISD has on-level (4.0), pre AP/Advanced (4.5), and AP/IB (5.0) level classes.
-          Each point earned counts toward 0.05 GPA, and the final GPA is the average of all classes.
+          Each point lost counts as -0.05 GPA points for that specific class, and the final GPA is the average of all classes.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -102,7 +102,7 @@ const GPAcalculator = () => {
           {parseInt(numClasses) > 0 && Array.from({ length: parseInt(numClasses) }, (_, i) => (
             <div key={i} className="space-y-2">
               <Label htmlFor={`class_name_${i}`}>Class {i + 1}</Label>
-              <div className="flex space-x-2">
+              <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
                 <Input
                   type="text"
                   id={`class_name_${i}`}
@@ -110,6 +110,7 @@ const GPAcalculator = () => {
                   onChange={(e) => handleClassChange(i, 'name', e.target.value)}
                   placeholder="Class Name"
                   required
+                  className="flex-grow"
                 />
                 <Select
                   onValueChange={(value: string | number) => handleClassChange(i, 'level', value)}
@@ -130,6 +131,7 @@ const GPAcalculator = () => {
                   onChange={(e) => handleClassChange(i, 'grade', e.target.value)}
                   placeholder="Grade"
                   required
+                  className="w-full sm:w-[100px]"
                 />
               </div>
             </div>

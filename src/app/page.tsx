@@ -1,5 +1,5 @@
 import './globals.css';
-import GPAcalculator from '@/components/Calc';
+import GPAcalculator from '@/components/GPACalculator';
 
 const MyApp = () => {
   return (
