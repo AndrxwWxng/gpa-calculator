@@ -249,7 +249,7 @@ useEffect(() => {
             )}
 
             {/* button to calc gpa */}
-            {parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() && (
+            {Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() && (
               <div className="flex justify-center pt-4">
                 <Button
                   type="submit"
@@ -262,7 +262,7 @@ useEffect(() => {
           </form>
 
           {/* the resulting gpa */}
-          {finalGPA !== null && (
+          {finalGPA !== null && Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && (
             <div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-100">
               <div className="text-center">
                 <p className="text-sm font-light text-green-700 mb-2">Your Calculated GPA</p>
