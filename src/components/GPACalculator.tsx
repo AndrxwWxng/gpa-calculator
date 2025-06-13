@@ -176,7 +176,7 @@ useEffect(() => {
               <p>(i.e, a 95 in a AP/IB class would equate to a GPA of 4.75).</p>
               <p>GPA is calculated per semester, found by averaging the sum of the GPAs of each class.</p>
               <p>The two semester GPAs are then averaged to find the annual GPA.</p>
-              <p>Likewise, the GPA for the entirety of one's Highschool Career is the average of the GPAs for each year from Freshman Year to Senior Year.</p>
+              <p>Likewise, the GPA for the entirety of one&apos;s Highschool Career is the average of the GPAs for each year from Freshman Year to Senior Year.</p>
               <a href="https://docs.google.com/document/d/1183yTpocWvplymSCg_oPGUHNXGq-FHSKSCnjMe9Gtfs/edit?tab=t.0"
                  className="text-turquoise hover:text-turquoise-dark underline transition-colors font-medium"
                  target="_blank"
