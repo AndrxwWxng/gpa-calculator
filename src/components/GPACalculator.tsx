@@ -58,8 +58,6 @@ useEffect(() => {
   }
 }, []);
 
-
-
   const handleNumClassesChange = (e: ChangeEvent<HTMLInputElement>) => {
   const value = e.target.value;
   setNumClasses(value);
@@ -71,14 +69,19 @@ useEffect(() => {
     return;
   }
 
+  
+  const savedClasses = [...classes];
   const newClasses = Array(numValue)
     .fill(null)
-    .map(() => ({ name: '', level: 4, grade: '' }));
-
+    .map((_, i) => savedClasses[i] || { name: '', level: 4, grade: '' });
+  
   setClasses(newClasses);
   localStorage.setItem('numClasses', value);
   localStorage.setItem('classes', JSON.stringify(newClasses));
+  
 };
+
+
 
 
   const handleClassChange = (index: number, field: keyof ClassInfo, value: string | number) => {
@@ -137,6 +140,23 @@ useEffect(() => {
     }
   };
 
+
+  const clear = (e: FormEvent) =>  {
+    
+    e.preventDefault();
+    setNumClasses('');
+    setClasses([]);
+    setFinalGPA(null);
+    setSemestersDone('');
+    setCurrentGPA('');
+    setCumulativeGPA(null);
+
+    localStorage.removeItem('numClasses')
+    localStorage.removeItem('classes')
+    localStorage.removeItem('semestersDone')
+    localStorage.removeItem('currentGPA')
+  };
+
   const areAllFieldsFilled = () => {
     return classes.every((c) => c.name.trim() !== '' && !isNaN(c.level) && c.grade.trim() !== '');
   };
@@ -161,8 +181,11 @@ useEffect(() => {
       <Card className="bg-card border border-border/30 shadow-lg rounded-2xl overflow-hidden transition-all duration-300 animate-fade-in-up">
         <CardHeader className="border-b border-border/20 pb-4">
           <CardDescription className="text-sm font-medium text-muted-foreground leading-relaxed">
-            This program calculates GPA on the Allen ISD scale. Input the number of classes, their name, level, and course grade.
+            This program calculates GPA on the Allen ISD scale. To find your GPA for the semester, input the number of classes, their name, level, and course grade.
             Allen ISD has on-level (4.0), pre AP/Advanced (4.5), and AP/IB (5.0) level classes.
+            <br></br><br></br>
+            If you wish to find your cumulative GPA for your entire highschool career, additionally input the GPA listed in your most recent transcript as well as the number of semesters completed at the time of the transcript.
+            (i.e, if you are a junior using your fall transcript, you would input 5 semesters; 2 for both your freshman and sophormore years, and one more for the completed fall semester.)
           </CardDescription>
           <details className="group mt-4">
             <summary className="cursor-pointer text-sm font-medium text-turquoise hover:text-turquoise-dark transition-colors flex items-center gap-2">
@@ -174,14 +197,13 @@ useEffect(() => {
             <div className="mt-3 text-xs font-medium text-muted-foreground leading-relaxed space-y-2 pl-3 border-l border-turquoise/30">
               <p>At a class grade of 100, you are awarded the full GPA of the class you selected. Every point away from 100 subtracts 0.05 from the total GPA.</p>
               <p>(i.e, a 95 in a AP/IB class would equate to a GPA of 4.75).</p>
-              <p>GPA is calculated per semester, found by averaging the sum of the GPAs of each class.</p>
-              <p>The two semester GPAs are then averaged to find the annual GPA.</p>
-              <p>Likewise, the GPA for the entirety of one&apos;s Highschool Career is the average of the GPAs for each year from Freshman Year to Senior Year.</p>
+              <p>GPA per semester is found by averaging the sum of the GPAs of the classes.</p>
+              <p>The final GPA is found by averaging the GPAs of each semester.</p>
               <a href="https://docs.google.com/document/d/1183yTpocWvplymSCg_oPGUHNXGq-FHSKSCnjMe9Gtfs/edit?tab=t.0"
                  className="text-turquoise hover:text-turquoise-dark underline transition-colors font-medium"
                  target="_blank"
                  rel="noopener noreferrer">
-                For more detailed information, see documentation
+                For more detailed information, see the official Allen documentation.
               </a>
             </div>
           </details>
@@ -307,7 +329,7 @@ useEffect(() => {
                       <div>
                         <Select
                           onValueChange={(value: string | number) => handleClassChange(i, 'level', value)}
-                          defaultValue={classes[i]?.level.toString() || "4"}
+                          value={classes[i]?.level.toString() || "4"}
                         >
                           <SelectTrigger className="h-9 text-sm font-medium border-border rounded-md focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200">
                             <SelectValue placeholder="Level" />
@@ -344,6 +366,9 @@ useEffect(() => {
             )}
 
             {/* button to calc gpa */}
+            
+            
+            
             {Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() && (
               <div className="flex justify-center pt-4">
                 <Button
@@ -356,6 +381,15 @@ useEffect(() => {
             )}
           </form>
 
+          <form onSubmit={clear} className="space-y-6">
+            <Button
+                  type="submit"
+                  className="h-10 px-8 text-sm font-semibold bg-turquoise hover:bg-turquoise-dark rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-white"
+                >
+                  Clear Entries
+            </Button>
+            </form>
+          
           {/* the resulting gpa */}
           {finalGPA !== null && Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && (
             <div className="mt-6 space-y-4">
