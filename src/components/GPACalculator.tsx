@@ -158,7 +158,7 @@ useEffect(() => {
   };
 
   const areAllFieldsFilled = () => {
-    return classes.every((c) => c.name.trim() !== '' && !isNaN(c.level) && c.grade.trim() !== '');
+    return classes.every((c) => !isNaN(c.level) && c.grade.trim() !== '');
   };
 
   if (!isClient) {
@@ -321,8 +321,7 @@ useEffect(() => {
                           id={`class_name_${i}`}
                           value={classes[i]?.name || ''}
                           onChange={(e) => handleClassChange(i, 'name', e.target.value)}
-                          placeholder="Class name"
-                          required
+                          placeholder="Class name (optional)"
                           className="h-9 text-sm font-medium border-border rounded-md focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200"
                         />
                       </div>
@@ -347,7 +346,6 @@ useEffect(() => {
                           value={classes[i]?.grade || ''}
                           onChange={(e) => handleClassChange(i, 'grade', e.target.value)}
                           placeholder="Grade"
-                          required
                           className="h-9 text-sm font-medium border-border rounded-md focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200"
                         />
                       </div>
@@ -365,30 +363,51 @@ useEffect(() => {
               </div>
             )}
 
-            {/* button to calc gpa */}
-            
-            
-            
-            {Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() && (
-              <div className="flex justify-center pt-4">
-                <Button
-                  type="submit"
-                  className="h-10 px-8 text-sm font-semibold bg-turquoise hover:bg-turquoise-dark rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-white"
-                >
-                  Calculate GPA
-                </Button>
-              </div>
-            )}
-          </form>
+            {/* where le buttons are */}
+            <div className="pt-6">
+              {Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() && (
+                <div className="relative w-full flex justify-center items-center">
+                  <Button
+                    type="submit"
+                    className="h-12 px-10 text-sm font-bold bg-gradient-to-r from-turquoise to-turquoise-dark hover:from-turquoise-dark hover:to-turquoise rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-white border-0 ring-2 ring-turquoise/20 hover:ring-turquoise/40"
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    Calculate GPA
+                  </Button>
 
-          <form onSubmit={clear} className="space-y-6">
-            <Button
-                  type="submit"
-                  className="h-10 px-8 text-sm font-semibold bg-turquoise hover:bg-turquoise-dark rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-white"
-                >
-                  Clear Entries
-            </Button>
-            </form>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={(e) => clear(e)}
+                    className="absolute left-1/2 -translate-x-full -ml-36 h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Clear Entries
+                  </Button>
+                </div>
+              )}
+
+              {!(Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled()) && (
+                <div className="flex justify-center">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={(e) => clear(e)}
+                    className="h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    Clear Entries
+                  </Button>
+                </div>
+              )}
+            </div>
+          </form>
           
           {/* the resulting gpa */}
           {finalGPA !== null && Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && (
