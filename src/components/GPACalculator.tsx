@@ -366,28 +366,44 @@ useEffect(() => {
             {/* where le buttons are */}
             <div className="pt-6">
               {Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() && (
-                <div className="relative w-full flex justify-center items-center">
-                  <Button
-                    type="submit"
-                    className="h-12 px-10 text-sm font-bold bg-gradient-to-r from-turquoise to-turquoise-dark hover:from-turquoise-dark hover:to-turquoise rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-white border-0 ring-2 ring-turquoise/20 hover:ring-turquoise/40"
-                  >
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                    </svg>
-                    Calculate GPA
-                  </Button>
+                <div className="w-full">
+                  <div className="relative w-full flex justify-center items-center">
+                    <Button
+                      type="submit"
+                      className="h-12 px-10 text-sm font-bold bg-gradient-to-r from-turquoise to-turquoise-dark hover:from-turquoise-dark hover:to-turquoise rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-white border-0 ring-2 ring-turquoise/20 hover:ring-turquoise/40"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                      </svg>
+                      Calculate GPA
+                    </Button>
 
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={(e) => clear(e)}
-                    className="absolute left-1/2 -translate-x-full -ml-36 h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                  >
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                    Clear Entries
-                  </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={(e) => clear(e)}
+                      className="hidden md:absolute md:left-1/2 md:translate-x-full md:ml-36 h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      Clear Entries
+                    </Button>
+                  </div>
+
+                  <div className="flex justify-center md:hidden mt-3">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={(e) => clear(e)}
+                      className="h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                    >
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      Clear Entries
+                    </Button>
+                  </div>
                 </div>
               )}
 
