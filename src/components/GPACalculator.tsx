@@ -382,7 +382,7 @@ useEffect(() => {
                       type="button"
                       variant="outline"
                       onClick={(e) => clear(e)}
-                      className="hidden md:absolute md:left-1/2 md:translate-x-full md:ml-36 h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
+                      className="hidden md:flex absolute left-1/2 -translate-x-full -ml-36 h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
                     >
                       <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
