@@ -16,13 +16,45 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GPA Calculator",
-  description: "Calculate your GPA using the Allen ISD scale",
+  title: "AISD GPA Calculator",
+  description: "GPA Calculator for Allen ISD!",
+  keywords: ["GPA", "Calculator", "Allen", "ISD"],
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 5,
+  },
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-icon.png",
-    shortcut: "/shortcut-icon.png"
-  }
+    icon: [
+      { url: '/favicon.ico', type: 'image/x-icon' },
+      { url: '/images/logo.png', type: 'image/png' }
+    ],
+    shortcut: [{ url: '/favicon.ico', type: 'image/x-icon' }],
+    apple: [{ url: '/images/logo.png', type: 'image/png' }],
+    other: [
+      { rel: 'apple-touch-icon-precomposed', url: '/images/logo.png' }
+    ]
+  },
+  openGraph: {
+    type: "website",
+    siteName: "GPA Calculator",
+    title: undefined,
+    description: "GPA Calculator for Allen ISD!",
+    images: [
+      {
+        url: "/images/logo.png",
+        width: 800,
+        height: 800,
+        alt: "GPA Calculator Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: undefined,
+    description: "GPA Calculator for Allen ISD!",
+    images: ["/images/logo.png"],
+  },
 };
 
 export default function RootLayout({
