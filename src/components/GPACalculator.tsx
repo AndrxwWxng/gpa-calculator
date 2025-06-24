@@ -4,8 +4,6 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 
 interface ClassInfo {
   name: string;
@@ -166,309 +164,256 @@ useEffect(() => {
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
-      {/* header title and stuff */}
-      <div className="text-center mb-8 animate-fade-in-up">
-        <h1 className="text-4xl font-semibold text-foreground mb-3 tracking-tight">
+    <div className="w-full max-w-4xl mx-auto px-6">
+      {/* header */}
+      <div className="text-center mb-20">
+        <h1 className="text-5xl font-thin tracking-wide text-slate-800 dark:text-slate-100 mb-3">
           GPA Calculator
         </h1>
-        <p className="text-base font-medium text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-          Calculate your GPA using the Allen ISD scale with precision and ease
+        <p className="text-sm font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+          Allen ISD Scale
         </p>
       </div>
 
-      {/* main card with the calc */}
-      <Card className="bg-card border border-border/30 shadow-lg rounded-2xl overflow-hidden transition-all duration-300 animate-fade-in-up">
-        <CardHeader className="border-b border-border/20 pb-4">
-          <CardDescription className="text-sm font-medium text-muted-foreground leading-relaxed">
-            This program calculates GPA on the Allen ISD scale. To find your GPA for the semester, input the number of classes, their name, level, and course grade.
-            Allen ISD has on-level (4.0), pre AP/Advanced (4.5), and AP/IB (5.0) level classes.
-            <br></br><br></br>
-            If you wish to find your cumulative GPA for your entire highschool career, additionally input the GPA listed in your most recent transcript as well as the number of semesters completed at the time of the transcript.
-            (i.e, if you are a junior using your fall transcript, you would input 5 semesters; 2 for both your freshman and sophormore years, and one more for the completed fall semester.)
-          </CardDescription>
-          <details className="group mt-4">
-            <summary className="cursor-pointer text-sm font-medium text-turquoise hover:text-turquoise-dark transition-colors flex items-center gap-2">
-              <span>View detailed calculation method</span>
-              <svg className="w-3 h-3 transition-transform duration-200 group-open:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </summary>
-            <div className="mt-3 text-xs font-medium text-muted-foreground leading-relaxed space-y-2 pl-3 border-l border-turquoise/30">
-              <p>At a class grade of 100, you are awarded the full GPA of the class you selected. Every point away from 100 subtracts 0.05 from the total GPA.</p>
-              <p>(i.e, a 95 in a AP/IB class would equate to a GPA of 4.75).</p>
-              <p>GPA per semester is found by averaging the sum of the GPAs of the classes.</p>
-              <p>The final GPA is found by averaging the GPAs of each semester.</p>
+      {/* section */}
+      <div className="mb-16">
+        <details className="group">
+          <summary className="cursor-pointer text-center text-xs font-light text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors uppercase tracking-widest">
+            How it works
+          </summary>
+          <div className="mt-8 max-w-2xl mx-auto text-center space-y-4 text-sm font-light text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p>This program calculates GPA on the Allen ISD scale. To find your GPA for the semester, input the number of classes, their name, level, and course grade. Allen ISD has on-level (4.0), pre AP/Advanced (4.5), and AP/IB (5.0) level classes.</p>
+            <p>If you wish to find your cumulative GPA for your entire highschool career, additionally input the GPA listed in your most recent transcript as well as the number of semesters completed at the time of the transcript. (i.e, if you are a junior using your fall transcript, you would input 5 semesters; 2 for both your freshman and sophormore years, and one more for the completed fall semester.)</p>
+            <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
+              <p className="text-xs">At a class grade of 100, you are awarded the full GPA of the class you selected. Every point away from 100 subtracts 0.05 from the total GPA. (i.e, a 95 in a AP/IB class would equate to a GPA of 4.75). GPA per semester is found by averaging the sum of the GPAs of the classes. The final GPA is found by averaging the GPAs of each semester.</p>
               <a href="https://docs.google.com/document/d/1183yTpocWvplymSCg_oPGUHNXGq-FHSKSCnjMe9Gtfs/edit?tab=t.0"
-                 className="text-turquoise hover:text-turquoise-dark underline transition-colors font-medium"
+                 className="inline-block mt-3 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium underline transition-colors"
                  target="_blank"
                  rel="noopener noreferrer">
-                For more detailed information, see the official Allen documentation.
+                Official Allen Documentation
               </a>
             </div>
-          </details>
-        </CardHeader>
-        <CardContent className="p-6 space-y-6">
-          <form onSubmit={calculateGPA} className="space-y-6">
-            {/* input num classes */}
-            <div className="space-y-2">
-              <Label htmlFor="numClasses" className="text-sm font-semibold text-foreground">
-                Number of Classes
-              </Label>
-              <Input
-                type="number"
-                id="numClasses"
-                value={numClasses}
-                onChange={handleNumClassesChange}
-                placeholder="5-8 classes"
-                className="h-10 text-sm font-medium border-border rounded-lg focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200"
-              />
-              {parseInt(numClasses) > 8 || parseInt(numClasses) < 5 ? (
-                <div className="flex items-center space-x-2 text-destructive bg-destructive/5 p-2 rounded-md border border-destructive/20">
-                  <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                  </svg>
-                  <p className="text-xs font-medium">Must be between 5-8 classes</p>
-                </div>
-              ) : (
-                <p className="text-xs font-medium text-muted-foreground">Enter 5-8 classes</p>
-              )}
-            </div>
+          </div>
+        </details>
+      </div>
+      {/* form */}
+      <form onSubmit={calculateGPA} className="space-y-16">
 
-            {/* semester tracking inputs */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="semestersDone" className="text-sm font-semibold text-foreground">
-                  Semesters Completed
-                </Label>
-                <Input
-                  type="number"
-                  id="semestersDone"
-                  value={semestersDone}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setSemestersDone(value);
-                    localStorage.setItem('semestersDone', value);
-                  }}
-                  placeholder="0-8 semesters"
-                  min="0"
-                  max="8"
-                  step="1"
-                  className="h-10 text-sm font-medium border-border rounded-lg focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200"
-                />
-                {(parseInt(semestersDone) > 8 || parseInt(semestersDone) < 0) && semestersDone !== '' ? (
-                  <div className="flex items-center space-x-2 text-destructive bg-destructive/5 p-2 rounded-md border border-destructive/20">
-                    <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    <p className="text-xs font-medium">Must be 0-8 semesters</p>
+        {/* semester inputs */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="space-y-2">
+            <label className="block text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+              Classes
+            </label>
+            <Input
+              type="number"
+              value={numClasses}
+              onChange={handleNumClassesChange}
+              placeholder="5-8"
+              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light"
+            />
+            {parseInt(numClasses) > 8 || parseInt(numClasses) < 5 ? (
+              <p className="text-xs text-red-500 font-light">5-8 classes required</p>
+            ) : (
+              <p className="text-xs text-slate-400 font-light">Number of classes</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+              Semesters
+            </label>
+            <Input
+              type="number"
+              value={semestersDone}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSemestersDone(value);
+                localStorage.setItem('semestersDone', value);
+              }}
+              placeholder="0-8"
+              min="0"
+              max="8"
+              step="1"
+              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light"
+            />
+            {(parseInt(semestersDone) > 8 || parseInt(semestersDone) < 0) && semestersDone !== '' ? (
+              <p className="text-xs text-red-500 font-light">0-8 semesters</p>
+            ) : (
+              <p className="text-xs text-slate-400 font-light">Completed (optional)</p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <label className="block text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+              Current GPA
+            </label>
+            <Input
+              type="number"
+              value={currentGPA}
+              onChange={(e) => {
+                const value = e.target.value;
+                setCurrentGPA(value);
+                localStorage.setItem('currentGPA', value);
+              }}
+              placeholder="0.0000"
+              min="0"
+              max="5"
+              step="0.0001"
+              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light"
+            />
+            {(parseFloat(currentGPA) > 5 || parseFloat(currentGPA) < 0) && currentGPA !== '' ? (
+              <p className="text-xs text-red-500 font-light">0.0000-5.0000</p>
+            ) : (
+              <p className="text-xs text-slate-400 font-light">From transcript (optional)</p>
+            )}
+          </div>
+        </div>
+
+        {/* grade inputs */}
+        {parseInt(numClasses) >= 5 && parseInt(numClasses) <= 8 && (
+          <div className="space-y-12">
+            <h3 className="text-center text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+              Class Details
+            </h3>
+
+            <div className="space-y-8">
+              {Array.from({ length: parseInt(numClasses) }, (_, i) => (
+                <div key={i} className="grid grid-cols-1 md:grid-cols-4 gap-6 py-6 border-b border-slate-100 dark:border-slate-800 last:border-b-0">
+
+                  <div className="space-y-2">
+                    <label className="block text-xs font-light text-slate-400 uppercase tracking-widest">
+                      {i + 1}. Name
+                    </label>
+                    <Input
+                      type="text"
+                      value={classes[i]?.name || ''}
+                      onChange={(e) => handleClassChange(i, 'name', e.target.value)}
+                      placeholder="Optional"
+                      className="border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-sm font-light"
+                    />
                   </div>
-                ) : (
-                  <p className="text-xs font-medium text-muted-foreground">Optional: for cumulative GPA</p>
-                )}
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="currentGPA" className="text-sm font-semibold text-foreground">
-                  Current GPA
-                </Label>
-                <Input
-                  type="number"
-                  id="currentGPA"
-                  value={currentGPA}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setCurrentGPA(value);
-                    localStorage.setItem('currentGPA', value);
-                  }}
-                  placeholder="0.0000-5.0000"
-                  min="0"
-                  max="5"
-                  step="0.0001"
-                  className="h-10 text-sm font-medium border-border rounded-lg focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200"
-                />
-                {(parseFloat(currentGPA) > 5 || parseFloat(currentGPA) < 0) && currentGPA !== '' ? (
-                  <div className="flex items-center space-x-2 text-destructive bg-destructive/5 p-2 rounded-md border border-destructive/20">
-                    <svg className="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                    </svg>
-                    <p className="text-xs font-medium">Must be 0.0000-5.0000</p>
+                  <div className="space-y-2">
+                    <label className="block text-xs font-light text-slate-400 uppercase tracking-widest">
+                      Level
+                    </label>
+                    <Select
+                      onValueChange={(value: string | number) => handleClassChange(i, 'level', value)}
+                      value={classes[i]?.level.toString() || "4"}
+                    >
+                      <SelectTrigger className="border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-sm font-light">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="5">AP/IB (5.0)</SelectItem>
+                        <SelectItem value="4.5">Advanced (4.5)</SelectItem>
+                        <SelectItem value="4">On-Level (4.0)</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
-                ) : (
-                  <p className="text-xs font-medium text-muted-foreground">Optional: for cumulative GPA</p>
-                )}
-              </div>
-            </div>
 
-            {/* where you input the names and the grades */}
-            {parseInt(numClasses) >= 5 && parseInt(numClasses) <= 8 && (
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-foreground border-b border-border/20 pb-2">
-                  Classes
-                </h3>
-                {Array.from({ length: parseInt(numClasses) }, (_, i) => (
-                  <div key={i} className="bg-muted/20 rounded-lg p-4 space-y-3 border border-border/20 hover:border-turquoise/40 transition-all duration-200">
-                    <Label htmlFor={`class_name_${i}`} className="text-xs font-semibold text-foreground flex items-center gap-2">
-                      <span className="w-5 h-5 bg-turquoise/20 text-turquoise rounded-full flex items-center justify-center text-xs font-bold">
-                        {i + 1}
-                      </span>
-                      Class {i + 1}
-                    </Label>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                      <div className="md:col-span-1">
-                        <Input
-                          type="text"
-                          id={`class_name_${i}`}
-                          value={classes[i]?.name || ''}
-                          onChange={(e) => handleClassChange(i, 'name', e.target.value)}
-                          placeholder="Class name (optional)"
-                          className="h-9 text-sm font-medium border-border rounded-md focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200"
-                        />
-                      </div>
-                      <div>
-                        <Select
-                          onValueChange={(value: string | number) => handleClassChange(i, 'level', value)}
-                          value={classes[i]?.level.toString() || "4"}
-                        >
-                          <SelectTrigger className="h-9 text-sm font-medium border-border rounded-md focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200">
-                            <SelectValue placeholder="Level" />
-                          </SelectTrigger>
-                          <SelectContent className="rounded-md border-border">
-                            <SelectItem value="5" className="font-medium text-sm">AP/IB (5.0)</SelectItem>
-                            <SelectItem value="4.5" className="font-medium text-sm">Advanced (4.5)</SelectItem>
-                            <SelectItem value="4" className="font-medium text-sm">On-Level (4.0)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <Input
-                          type="number"
-                          value={classes[i]?.grade || ''}
-                          onChange={(e) => handleClassChange(i, 'grade', e.target.value)}
-                          placeholder="Grade"
-                          className="h-9 text-sm font-medium border-border rounded-md focus:ring-1 focus:ring-turquoise focus:border-turquoise transition-all duration-200"
-                        />
-                      </div>
-                    </div>
-                    {(parseInt(classes[i]?.grade || '') < 0 || parseInt(classes[i]?.grade || '') > 100) && (
-                      <div className="flex items-center space-x-2 text-destructive bg-destructive/5 p-2 rounded-md border border-destructive/20">
-                        <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                        </svg>
-                        <p className="text-xs font-medium">Grade must be 0-100</p>
-                      </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs font-light text-slate-400 uppercase tracking-widest">
+                      Grade
+                    </label>
+                    <Input
+                      type="number"
+                      value={classes[i]?.grade || ''}
+                      onChange={(e) => handleClassChange(i, 'grade', e.target.value)}
+                      placeholder="0-100"
+                      className="border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-sm font-light"
+                    />
+                    {(parseInt(classes[i]?.grade || '') < 0 || parseInt(classes[i]?.grade || '') > 100) && classes[i]?.grade && (
+                      <p className="text-xs text-red-500 font-light">0-100 required</p>
                     )}
                   </div>
-                ))}
+
+                  <div className="space-y-2">
+                    <label className="block text-xs font-light text-slate-400 uppercase tracking-widest">
+                      GPA
+                    </label>
+                    <div className="text-sm font-light text-slate-600 dark:text-slate-400 py-3">
+                      {(() => {
+                        const grade = parseFloat(classes[i]?.grade || '0');
+                        const level = classes[i]?.level || 4;
+                        if (isNaN(grade) || grade < 70) return '0.00';
+                        return (level - 0.05 * (100 - grade)).toFixed(2);
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* buttons */}
+        <div className="flex items-center justify-center gap-8 pt-12">
+          {Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() ? (
+            <>
+              <Button
+                type="submit"
+                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-light text-sm rounded-none border-0 transition-colors"
+              >
+                Calculate GPA
+              </Button>
+
+              <Button
+                type="button"
+                onClick={(e) => clear(e)}
+                variant="outline"
+                className="px-8 py-3 border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 font-light text-sm rounded-none bg-transparent transition-colors"
+              >
+                Clear All
+              </Button>
+            </>
+          ) : (
+            <Button
+              type="button"
+              onClick={(e) => clear(e)}
+              variant="outline"
+              className="px-8 py-3 border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 font-light text-sm rounded-none bg-transparent transition-colors"
+            >
+              Clear All
+            </Button>
+          )}
+        </div>
+      </form>
+
+      {/* results */}
+      {finalGPA !== null && Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && (
+        <div className="mt-20 pt-16 border-t border-slate-200 dark:border-slate-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+
+            <div className="text-center space-y-4">
+              <h3 className="text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                Semester GPA
+              </h3>
+              <div className="text-4xl font-thin text-slate-800 dark:text-slate-100 tracking-wide">
+                {finalGPA.toFixed(4)}
+              </div>
+              <p className="text-xs font-light text-slate-400">
+                Allen ISD Scale
+              </p>
+            </div>
+
+            {cumulativeGPA !== null && (
+              <div className="text-center space-y-4">
+                <h3 className="text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
+                  Cumulative GPA
+                </h3>
+                <div className="text-4xl font-thin text-slate-800 dark:text-slate-100 tracking-wide">
+                  {cumulativeGPA.toFixed(4)}
+                </div>
+                <p className="text-xs font-light text-slate-400">
+                  After {parseInt(semestersDone) + 1} semester{parseInt(semestersDone) + 1 !== 1 ? 's' : ''}
+                </p>
               </div>
             )}
-
-            {/* where le buttons are */}
-            <div className="pt-6">
-              {Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled() && (
-                <div className="w-full">
-                  <div className="relative w-full flex justify-center items-center">
-                    <Button
-                      type="submit"
-                      className="h-12 px-10 text-sm font-bold bg-gradient-to-r from-turquoise to-turquoise-dark hover:from-turquoise-dark hover:to-turquoise rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 text-white border-0 ring-2 ring-turquoise/20 hover:ring-turquoise/40"
-                    >
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                      </svg>
-                      Calculate GPA
-                    </Button>
-
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={(e) => clear(e)}
-                      className="hidden md:flex absolute left-1/2 -translate-x-full -ml-36 h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                    >
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                      Clear Entries
-                    </Button>
-                  </div>
-
-                  <div className="flex justify-center md:hidden mt-3">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={(e) => clear(e)}
-                      className="h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                    >
-                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                      Clear Entries
-                    </Button>
-                  </div>
-                </div>
-              )}
-
-              {!(Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && parseInt(numClasses) > 4 && parseInt(numClasses) <= 8 && areAllFieldsFilled()) && (
-                <div className="flex justify-center">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={(e) => clear(e)}
-                    className="h-10 px-8 text-sm font-semibold border-2 border-border hover:border-turquoise/60 bg-background hover:bg-turquoise/5 text-foreground hover:text-turquoise rounded-lg shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105"
-                  >
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                    Clear Entries
-                  </Button>
-                </div>
-              )}
-            </div>
-          </form>
-          
-          {/* the resulting gpa */}
-          {finalGPA !== null && Array.from({length: parseInt(numClasses)}, (_,i) => parseInt(classes[i]?.grade)).every((grade)=>!isNaN(grade)&&grade<=100) && (
-            <div className="mt-6 space-y-4">
-              {/* sem gpa */}
-              <div className="p-4 bg-turquoise/5 rounded-lg border border-turquoise/20 animate-fade-in-up">
-                <div className="text-center space-y-2">
-                  <div className="inline-flex items-center gap-2 bg-turquoise/10 px-3 py-1 rounded-full">
-                    <svg className="w-4 h-4 text-turquoise" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p className="text-sm font-semibold text-turquoise">Semester GPA</p>
-                  </div>
-                  <p className="text-3xl font-bold text-turquoise tracking-tight font-mono">
-                    {finalGPA.toFixed(4)}
-                  </p>
-                  <p className="text-xs font-medium text-muted-foreground">
-                    Based on Allen ISD grading scale
-                  </p>
-                </div>
-              </div>
-
-              {/* cumulative gpa */}
-              {cumulativeGPA !== null && (
-                <div className="p-4 bg-turquoise/10 rounded-lg border border-turquoise/30 animate-fade-in-up">
-                  <div className="text-center space-y-2">
-                    <div className="inline-flex items-center gap-2 bg-turquoise/20 px-3 py-1 rounded-full">
-                      <svg className="w-4 h-4 text-turquoise" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                      </svg>
-                      <p className="text-sm font-semibold text-turquoise">Cumulative GPA After This Semester</p>
-                    </div>
-                    <p className="text-3xl font-bold text-turquoise tracking-tight font-mono">
-                      {cumulativeGPA.toFixed(4)}
-                    </p>
-                    <p className="text-xs font-medium text-muted-foreground">
-                      After {parseInt(semestersDone) + 1} semester{parseInt(semestersDone) + 1 !== 1 ? 's' : ''}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

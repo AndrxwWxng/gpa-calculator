@@ -4,64 +4,65 @@
 
 @layer base {
   :root {
-    --background: 0 0% 98%;
-    --foreground: 240 10% 15%;
+    --background: 0 0% 100%;
+    --foreground: 240 15% 9%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 15%;
+    --card-foreground: 240 15% 9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 15%;
-    --primary: 174 72% 56%;
+    --popover-foreground: 240 15% 9%;
+    --primary: 214 84% 56%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 174 20% 95%;
-    --secondary-foreground: 240 10% 15%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 15% 9%;
     --muted: 240 5% 96%;
     --muted-foreground: 240 4% 46%;
-    --accent: 174 72% 56%;
+    --accent: 214 84% 56%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
+    --destructive: 4 90% 58%;
     --destructive-foreground: 0 0% 100%;
     --border: 240 6% 90%;
     --input: 240 6% 90%;
-    --ring: 174 72% 56%;
+    --ring: 214 84% 56%;
     --radius: 0.75rem;
-    --turquoise: 174 72% 56%;
-    --turquoise-light: 174 50% 85%;
-    --turquoise-dark: 174 72% 45%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+
+    /* Custom color palette */
+    --red-accent: 4 90% 58%;
+    --blue-primary: 214 84% 56%;
+    --blue-dark: 240 45% 39%;
+    --blue-light: 214 84% 70%;
+    --white: 0 0% 100%;
+
+    /* Semantic colors using the palette */
+    --primary-color: var(--blue-primary);
+    --secondary-color: var(--blue-light);
+    --accent-color: var(--red-accent);
+    --neutral-color: var(--blue-dark);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 174 72% 56%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 174 72% 56%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 174 72% 56%;
-    --turquoise: 174 72% 56%;
-    --turquoise-light: 174 30% 25%;
-    --turquoise-dark: 174 72% 65%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 240 45% 9%;
+    --foreground: 0 0% 98%;
+    --card: 240 45% 11%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 45% 11%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 214 84% 56%;
+    --primary-foreground: 240 45% 9%;
+    --secondary: 240 45% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 45% 15%;
+    --muted-foreground: 240 20% 65%;
+    --accent: 214 84% 56%;
+    --accent-foreground: 240 45% 9%;
+    --destructive: 4 90% 58%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 45% 20%;
+    --input: 240 45% 15%;
+    --ring: 214 84% 56%;
+
+    /* Dark mode adjustments */
+    --blue-light: 214 84% 65%;
+    --secondary-color: var(--blue-light);
   }
 }
 
@@ -70,9 +71,11 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-medium;
+    @apply bg-background text-foreground font-light;
     font-family: var(--font-inter), system-ui, sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
+    overflow-x: hidden;
+    letter-spacing: 0.025em;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -137,19 +140,67 @@
 
   /* customs scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
   }
 
   ::-webkit-scrollbar-track {
     background: hsl(var(--muted));
+    border-radius: 8px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--turquoise) / 0.5);
-    border-radius: 4px;
+    background: hsl(var(--blue-primary) / 0.6);
+    border-radius: 8px;
+    border: 2px solid hsl(var(--background));
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--turquoise));
+    background: hsl(var(--blue-primary));
+  }
+
+  .focus-visible {
+    outline: 2px solid hsl(var(--blue-primary));
+    outline-offset: 2px;
+  }
+
+  /* transitions */
+  button, input, select, textarea {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .backdrop-blur-sm {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .backdrop-blur-xl {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* aniamtions */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  input:focus, select:focus, button:focus {
+    outline: none;
+  }
+
+  ::selection {
+    background: hsl(var(--blue-primary) / 0.2);
+    color: hsl(var(--blue-dark));
   }
 }
