@@ -55,11 +55,11 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        turquoise: {
-          DEFAULT: "hsl(var(--turquoise))",
-          light: "hsl(var(--turquoise-light))",
-          dark: "hsl(var(--turquoise-dark))",
-        },
+        'red-accent': '#BD2409',
+        'blue-primary': '#37689D',
+        'blue-dark': '#302E64',
+        'blue-light': '#6383D6',
+        'white-custom': '#FFFFFF',
       },
       borderRadius: {
         lg: "var(--radius)",
