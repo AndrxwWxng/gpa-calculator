@@ -19,7 +19,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "AISD GPA Calculator",
   description: "GPA Calculator for Allen ISD!",
-  keywords: ["GPA", "Calculator", "Allen", "ISD"],
+  keywords: ["GPA", "Calculator", "Allen", "ISD", "GPA Calculator", "GPA Calculator for Allen ISD"],
   viewport: {
     width: 'device-width',
     initialScale: 1,
