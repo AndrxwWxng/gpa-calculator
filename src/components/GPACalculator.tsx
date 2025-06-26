@@ -437,6 +437,18 @@ useEffect(() => {
           </div>
         </div>
       )}
+
+      {/* Footer */}
+      <footer className="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800">
+        <div className="text-center space-y-2">
+          <p className="text-xs font-light text-slate-400">
+            © {new Date().getFullYear()} GPA Calculator. All rights reserved.
+          </p>
+          <p className="text-xs font-light text-slate-400">
+            Made with <span className="text-red-500">♥</span> for Allen ISD students
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
