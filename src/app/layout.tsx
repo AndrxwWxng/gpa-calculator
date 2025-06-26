@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     description: "GPA Calculator for Allen ISD!",
     images: [
       {
-        url: "/images/logo.png",
+        url: "/images/logo.png?v=2",
         width: 800,
         height: 800,
         alt: "GPA Calculator Logo",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: undefined,
     description: "GPA Calculator for Allen ISD!",
-    images: ["/images/logo.png"],
+    images: ["/images/logo.png?v=2"],
   },
 };
 
