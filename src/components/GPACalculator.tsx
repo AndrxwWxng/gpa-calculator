@@ -219,8 +219,9 @@ useEffect(() => {
               max="8"
               value={numClasses}
               onChange={handleNumClassesChange}
+              onWheel={(e) => e.currentTarget.blur()}
               placeholder="5-8"
-              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light"
+              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             />
             {parseInt(numClasses) > 8 || parseInt(numClasses) < 5 ? (
               <p className="text-xs text-red-500 font-light">5-8 classes required</p>
@@ -234,13 +235,13 @@ useEffect(() => {
                     <label className="block text-xs font-light text-slate-400 uppercase tracking-widest">
                       Grade Level
                     </label>
-                    <Select 
+                    <Select
                     onValueChange={(value) => {
                       localStorage.setItem('semestersDone', value);
                       setSemestersDone(localStorage.getItem('semestersDone')||value)
                     }}
                     value={localStorage.getItem('semestersDone')||'00'}>
-                      <SelectTrigger className="border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-sm font-light">
+                      <SelectTrigger className="h-12 border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -274,11 +275,12 @@ useEffect(() => {
                 }
                 localStorage.setItem('currentGPA', value);
               }}
+              onWheel={(e) => e.currentTarget.blur()}
               placeholder="0.0000"
               min="0"
               max="5"
               step="0.0001"
-              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light"
+              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             />
             {(parseFloat(currentGPA) > 5 || parseFloat(currentGPA) < 0) && currentGPA !== '' ? (
               <p className="text-xs text-red-500 font-light">0.0000-5.0000</p>
@@ -341,8 +343,9 @@ useEffect(() => {
                       max="100"
                       value={classes[i]?.grade || ''}
                       onChange={(e) => handleClassChange(i, 'grade', e.target.value)}
+                      onWheel={(e) => e.currentTarget.blur()}
                       placeholder="0-100"
-                      className="border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-sm font-light"
+                      className="border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-sm font-light [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
                     />
                     {(parseInt(classes[i]?.grade || '') < 0 || parseInt(classes[i]?.grade || '') > 100) && classes[i]?.grade && (
                       <p className="text-xs text-red-500 font-light">0-100 required</p>
