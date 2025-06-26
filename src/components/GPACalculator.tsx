@@ -58,29 +58,31 @@ useEffect(() => {
 
   const handleNumClassesChange = (e: ChangeEvent<HTMLInputElement>) => {
   const value = e.target.value;
+  
+  if(isNaN(+value)||+value<5&&value!=''||+value>8) {
+    return;
+  }
   setNumClasses(value);
 
   const numValue = parseInt(value);
-  if (isNaN(numValue) || numValue <= 0) {
+  if (isNaN(numValue) || numValue < 0) {
     setClasses([]);
     localStorage.removeItem('classes');
+    localStorage.removeItem('numClasses')
     return;
   }
 
-  
   const savedClasses = [...classes];
   const newClasses = Array(numValue)
     .fill(null)
     .map((_, i) => savedClasses[i] || { name: '', level: 4, grade: '' });
   
   setClasses(newClasses);
+  console.log(value);
   localStorage.setItem('numClasses', value);
   localStorage.setItem('classes', JSON.stringify(newClasses));
   
 };
-
-
-
 
   const handleClassChange = (index: number, field: keyof ClassInfo, value: string | number) => {
     const newClasses = [...classes];
@@ -90,6 +92,12 @@ useEffect(() => {
       newClasses[index][field] = value as string;
     } else {
       newClasses[index][field] = value as string;
+    }
+
+    if(field==="grade") {
+      newClasses[index][field] = value as string;
+      const num = +value;
+      if(isNaN(num)||num<0||num>100)return;
     }
 
     if(classes.length>0){
@@ -207,6 +215,8 @@ useEffect(() => {
             </label>
             <Input
               type="number"
+              min="5"
+              max="8"
               value={numClasses}
               onChange={handleNumClassesChange}
               placeholder="5-8"
@@ -228,7 +238,11 @@ useEffect(() => {
               value={semestersDone}
               onChange={(e) => {
                 const value = e.target.value;
-                setSemestersDone(value);
+                if(isNaN(+value)||+value<0&&value!=''||+value>8) {
+                  return;
+                }else{
+                  setSemestersDone(value);
+                }
                 localStorage.setItem('semestersDone', value);
               }}
               placeholder="0-8"
@@ -253,7 +267,11 @@ useEffect(() => {
               value={currentGPA}
               onChange={(e) => {
                 const value = e.target.value;
-                setCurrentGPA(value);
+                if(isNaN(+value)||+value<0&&value!=''||+value>5) {
+                  return;
+                }else{
+                  setCurrentGPA(value);
+                }
                 localStorage.setItem('currentGPA', value);
               }}
               placeholder="0.0000"
@@ -319,6 +337,8 @@ useEffect(() => {
                     </label>
                     <Input
                       type="number"
+                      min="1"
+                      max="100"
                       value={classes[i]?.grade || ''}
                       onChange={(e) => handleClassChange(i, 'grade', e.target.value)}
                       placeholder="0-100"
