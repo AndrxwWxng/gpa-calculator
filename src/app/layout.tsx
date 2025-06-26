@@ -39,22 +39,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: "GPA Calculator",
-    title: undefined,
+    title: "AISD GPA Calculator",
     description: "GPA Calculator for Allen ISD!",
+    url: "https://gpa-calculator-andrxwwxng.vercel.app",
     images: [
       {
-        url: "/images/gpalogo.png",
-        width: 800,
-        height: 800,
+        url: "https://gpa-calculator-andrxwwxng.vercel.app/images/gpalogo.png",
+        width: 1200,
+        height: 630,
         alt: "GPA Calculator Logo",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: undefined,
+    title: "AISD GPA Calculator",
     description: "GPA Calculator for Allen ISD!",
-    images: ["/images/gpalogo.png"],
+    images: ["https://gpa-calculator-andrxwwxng.vercel.app/images/gpalogo.png"],
   },
 };
 
