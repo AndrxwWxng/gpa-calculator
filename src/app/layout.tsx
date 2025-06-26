@@ -28,12 +28,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico', type: 'image/x-icon' },
-      { url: '/images/logo.png', type: 'image/png' }
+      { url: '/images/gpalogo.png', type: 'image/png' }
     ],
     shortcut: [{ url: '/favicon.ico', type: 'image/x-icon' }],
-    apple: [{ url: '/images/logo.png', type: 'image/png' }],
+    apple: [{ url: '/images/gpalogo.png', type: 'image/png' }],
     other: [
-      { rel: 'apple-touch-icon-precomposed', url: '/images/logo.png' }
+      { rel: 'apple-touch-icon-precomposed', url: '/images/gpalogo.png' }
     ]
   },
   openGraph: {
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     description: "GPA Calculator for Allen ISD!",
     images: [
       {
-        url: "/images/logo.png?v=2",
+        url: "/images/gpalogo.png",
         width: 800,
         height: 800,
         alt: "GPA Calculator Logo",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: undefined,
     description: "GPA Calculator for Allen ISD!",
-    images: ["/images/logo.png?v=2"],
+    images: ["/images/gpalogo.png"],
   },
 };
 
