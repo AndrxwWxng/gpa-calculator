@@ -191,7 +191,7 @@ useEffect(() => {
           </summary>
           <div className="mt-8 max-w-2xl mx-auto text-center space-y-4 text-sm font-light text-slate-600 dark:text-slate-400 leading-relaxed">
             <p>This program calculates GPA on the Allen ISD scale. To find your GPA for the semester, input the number of classes, their name, level, and course grade. Allen ISD has on-level (4.0), pre AP/Advanced (4.5), and AP/IB (5.0) level classes.</p>
-            <p>If you wish to find your cumulative GPA for your entire highschool career, additionally input the GPA listed in your most recent transcript as well as the number of semesters completed at the time of the transcript. (i.e, if you are a junior using your fall transcript, you would input 5 semesters; 2 for both your freshman and sophormore years, and one more for the completed fall semester.)</p>
+            <p>If you wish to find your cumulative GPA for your entire highschool career, additionally input the GPA listed in your most recent transcript as well as the grade and semester you are in (The transcript should be from your last semester.)</p>
             <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
               <p className="text-xs">At a class grade of 100, you are awarded the full GPA of the class you selected. Every point away from 100 subtracts 0.05 from the total GPA. (i.e, a 95 in a AP/IB class would equate to a GPA of 4.75). GPA per semester is found by averaging the sum of the GPAs of the classes. The final GPA is found by averaging the GPAs of each semester.</p>
               <a href="https://docs.google.com/document/d/1183yTpocWvplymSCg_oPGUHNXGq-FHSKSCnjMe9Gtfs/edit?tab=t.0"
@@ -229,33 +229,33 @@ useEffect(() => {
             )}
           </div>
 
+
           <div className="space-y-2">
-            <label className="block text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-              Semesters
-            </label>
-            <Input
-              type="number"
-              value={semestersDone}
-              onChange={(e) => {
-                const value = e.target.value;
-                if(isNaN(+value)||+value<0&&value!=''||+value>8) {
-                  return;
-                }else{
-                  setSemestersDone(value);
-                }
-                localStorage.setItem('semestersDone', value);
-              }}
-              placeholder="0-8"
-              min="0"
-              max="8"
-              step="1"
-              className="h-12 text-center border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-lg font-light"
-            />
-            {(parseInt(semestersDone) > 8 || parseInt(semestersDone) < 0) && semestersDone !== '' ? (
-              <p className="text-xs text-red-500 font-light">0-8 semesters</p>
-            ) : (
-              <p className="text-xs text-slate-400 font-light">Completed (optional)</p>
-            )}
+                    <label className="block text-xs font-light text-slate-400 uppercase tracking-widest">
+                      Grade Level
+                    </label>
+                    <Select 
+                    onValueChange={(value) => {
+                      localStorage.setItem('semestersDone', value);
+                      setSemestersDone(localStorage.getItem('semestersDone')||value)
+                    }}
+                    value={localStorage.getItem('semestersDone')||'00'}>
+                      <SelectTrigger className="border-0 border-b border-slate-200 dark:border-slate-700 rounded-none bg-transparent focus:border-blue-500 focus:ring-0 text-sm font-light">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="00">Select: </SelectItem>
+                        <SelectItem value="0">Freshman (Fall)</SelectItem>
+                        <SelectItem value="1">Freshman (Spring)</SelectItem>
+                        <SelectItem value="2">Sophomore (Fall)</SelectItem>
+                        <SelectItem value="3">Sophomore (Spring)</SelectItem>
+                        <SelectItem value="4">Junior (Fall)</SelectItem>
+                        <SelectItem value="5">Junior (Spring)</SelectItem>
+                        <SelectItem value="6">Senior (Fall)</SelectItem>
+                        <SelectItem value="7">Senior (Spring)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <p className="text-xs text-slate-400 font-light">Year and Semester (optional)</p>
           </div>
 
           <div className="space-y-2">
