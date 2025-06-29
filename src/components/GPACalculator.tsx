@@ -191,9 +191,9 @@ useEffect(() => {
           </summary>
           <div className="mt-8 max-w-2xl mx-auto text-center space-y-4 text-sm font-light text-slate-600 dark:text-slate-400 leading-relaxed">
             <p>This program calculates GPA on the Allen ISD scale. To find your GPA for the semester, input the number of classes, their name, level, and course grade. Allen ISD has on-level (4.0), pre AP/Advanced (4.5), and AP/IB (5.0) level classes.</p>
-            <p>If you wish to find your cumulative GPA for your entire highschool career, additionally input the GPA listed in your most recent transcript as well as the grade and semester you are in (The transcript should be from your last semester.)</p>
+            <p>If you wish to find your cumulative GPA for your entire highschool career, additionally input the GPA listed in your most recent transcript as well as the grade and semester you are in (If you are currently in a Fall Semester, the transcript should be from your last Spring Semester, and vice versa.)</p>
             <div className="pt-4 border-t border-slate-200 dark:border-slate-700">
-              <p className="text-xs">At a class grade of 100, you are awarded the full GPA of the class you selected. Every point away from 100 subtracts 0.05 from the total GPA. (i.e, a 95 in a AP/IB class would equate to a GPA of 4.75). GPA per semester is found by averaging the sum of the GPAs of the classes. The final GPA is found by averaging the GPAs of each semester.</p>
+              <p className="text-xs">At a class grade of 100, you are awarded the full GPA of the class you selected. Every point away from 100 subtracts 0.05 from the total GPA. (i.e, a 95 in a AP/IB class would equate to a GPA of 4.75). GPA per semester is found by averaging the sum of the GPAs of all classes. The final GPA is found by averaging the GPAs of each semester.</p>
               <a href="https://docs.google.com/document/d/1183yTpocWvplymSCg_oPGUHNXGq-FHSKSCnjMe9Gtfs/edit?tab=t.0"
                  className="inline-block mt-3 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium underline transition-colors"
                  target="_blank"
@@ -261,7 +261,7 @@ useEffect(() => {
 
           <div className="space-y-2">
             <label className="block text-xs font-light text-slate-500 dark:text-slate-400 uppercase tracking-widest">
-              Current GPA
+            Latest Listed GPA
             </label>
             <Input
               type="number"
@@ -285,7 +285,7 @@ useEffect(() => {
             {(parseFloat(currentGPA) > 5 || parseFloat(currentGPA) < 0) && currentGPA !== '' ? (
               <p className="text-xs text-red-500 font-light">0.0000-5.0000</p>
             ) : (
-              <p className="text-xs text-slate-400 font-light">From transcript (optional)</p>
+              <p className="text-xs text-slate-400 font-light">From most recent transcript (optional)</p>
             )}
           </div>
         </div>
